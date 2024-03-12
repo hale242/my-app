@@ -29,3 +29,19 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to server via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: 47.236.103.181
+        username: myapp.csplay9game.com
+        password: 0y40%tLa
+        script: |
+          cd /httpdocs
+          git pull
+          npm install --production
+          pm2 restart your-app-name
