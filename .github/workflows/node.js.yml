@@ -37,9 +37,9 @@ jobs:
     - name: Deploy to server via SSH
       uses: appleboy/ssh-action@master
       with:
-        host: 47.236.103.181
-        username: myapp.csplay9game.com
-        password: 0y40%tLa
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.SERVER_PASSWORD }}
         script: |
           cd /httpdocs
           git pull
