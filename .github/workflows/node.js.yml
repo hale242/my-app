@@ -46,3 +46,6 @@ jobs:
           git pull
           npm install --production
           pm2 restart your-app-name
+      env:
+        SSH_AUTH_SOCK: /dev/null
+        SSH_DEBUG: "true"
