@@ -44,7 +44,7 @@ jobs:
         host: 47.236.103.181
         username: myapp.csplay9game.com
         password: 0y40%tLa
-        # key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC1TwmeUYiXOnCCOOYmMgj16YxljAqD51AXigwM8yYF0ULWgZutnXtmjHNPQeJohvTKNP+P8mjeEYfdXiDZPZ6EU76shIbgzFRsMbbRCqVSdfJffQfFnIchgyDrImbmhgH8rWxRo8NDSfXLn2kz0Rcv3qocfbEtBsX5kyMIEEXV2cRRKtdb5whZ1rdyiKL3/dAQ7FJNwStvByn4qf8irZrQ39SzXVwxwW8ZG6PKIOWb4CLREVDlPA9fUkDNzLDxtvG+7rCQG3SSwElcn63ya4MQ9uO/yPrT0rcIO5IW8DRVCteYmj57ar58kHjLec15KSHeFcmsPK7eXGm9syM97UoQ+KAkz0JiSHV0CPMBfcvPzneiWUhVP5FNGAN/NdereAUOdeyBR47/baBwocYhHyyqU+cAtWhpoDT91t8JseOvtkftlyshU6SyoFbg+zOZYC0jX1CHcY6VxDw7Hs8zzq83xENtO45fi+Sl84p+KzYzOa+XZulH3UjswB72ij6YtG0= isara@Isaras-MacBook-Air.local
+        key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC1TwmeUYiXOnCCOOYmMgj16YxljAqD51AXigwM8yYF0ULWgZutnXtmjHNPQeJohvTKNP+P8mjeEYfdXiDZPZ6EU76shIbgzFRsMbbRCqVSdfJffQfFnIchgyDrImbmhgH8rWxRo8NDSfXLn2kz0Rcv3qocfbEtBsX5kyMIEEXV2cRRKtdb5whZ1rdyiKL3/dAQ7FJNwStvByn4qf8irZrQ39SzXVwxwW8ZG6PKIOWb4CLREVDlPA9fUkDNzLDxtvG+7rCQG3SSwElcn63ya4MQ9uO/yPrT0rcIO5IW8DRVCteYmj57ar58kHjLec15KSHeFcmsPK7eXGm9syM97UoQ+KAkz0JiSHV0CPMBfcvPzneiWUhVP5FNGAN/NdereAUOdeyBR47/baBwocYhHyyqU+cAtWhpoDT91t8JseOvtkftlyshU6SyoFbg+zOZYC0jX1CHcY6VxDw7Hs8zzq83xENtO45fi+Sl84p+KzYzOa+XZulH3UjswB72ij6YtG0= isara@Isaras-MacBook-Air.local
         # passphrase: 
         script: |
           cd /httpdocs
