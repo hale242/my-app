@@ -65,7 +65,10 @@ jobs:
         install -m 600 -D /dev/null ~/.ssh/id_rsa
         echo "${{ secrets.SERVER_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.SERVER_HOST }} > ~/.ssh/known_hosts
-    - name: connect and pull
-      run: ssh ${{ secrets.SERVER_PRIVATE_KEY }}@${{ secrets.SERVER_HOST }} "cd ~/httpdocs && git checkout main && git pull && exit"
+    # - name: connect and pull
+    #   run: ssh ${{ secrets.SERVER_PRIVATE_KEY }}@${{ secrets.SERVER_HOST }} "cd ~/httpdocs && git checkout main && git pull && exit"
+    - name: Connect and pull
+      run: |
+        ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} "cd ~/httpdocs && git checkout main && git pull"
     - name: cleanup
       run: rm -rf ~/.ssh
