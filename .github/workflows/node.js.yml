@@ -45,14 +45,14 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         # endpoint: ${{ secrets.SERVER_ENDPOINT }}
-        # host: ${{ secrets.SERVER_HOST }}
-        # username: ${{ secrets.SERVER_USERNAME }}
-        # password: ${{ secrets.SERVER_PASSWORD }}
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.SERVER_PASSWORD }}
         # key: ${{ secrets.SERVER_PRIVATE_KEY }}
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
+        # host: ${{ secrets.SSH_HOST }}
+        # username: ${{ secrets.SSH_USER }}
         script: |
-          # cd /httpdocs/test_build
+          # cd /httpdocs
           git pull
           npm install --production
           pm2 restart your-app-name
