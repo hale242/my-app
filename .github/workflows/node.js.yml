@@ -42,7 +42,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         key: ${{ secrets.SERVER_PRIVATE_KEY }}
-        passphrase: ${{ secrets.SSH_KEY_ACTIONS_PASSPHRASE }}
+        # passphrase: ${{ secrets.SSH_KEY_ACTIONS_PASSPHRASE }}
         # host: 47.236.103.181
         # username: myapp.csplay9game.com
         # password: 0y40%tLa
