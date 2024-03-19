@@ -10,53 +10,29 @@ on:
     branches: [ "main" ]
 
 jobs:
-  # build:
+  build:
 
-  #   runs-on: ubuntu-latest
-
-  #   strategy:
-  #     matrix:
-  #       node-version: [14.x]
-  #       # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: Use Node.js ${{ matrix.node-version }}
-  #     uses: actions/setup-node@v3
-  #     with:
-  #       node-version: ${{ matrix.node-version }}
-  #       cache: 'npm'
-  #   # - run: npm ci
-  #   - run: npm run build --if-present
-  #   - run: npm test
-
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Deploy to server via SSH
-  #     uses: appleboy/ssh-action@master
-  #     with:
-  #       endpoint: ${{ secrets.SERVER_ENDPOINT }}
-  #       host: ${{ secrets.SERVER_HOST }}
-  #       username: ${{ secrets.SERVER_USERNAME }}
-  #       password: ${{ secrets.SERVER_PASSWORD }}
-  #       key: ${{ secrets.SERVER_PRIVATE_KEY }}
-  #       # passphrase: ${{ secrets.SSH_KEY_ACTIONS_PASSPHRASE }}
-  #       # host: 47.236.103.181
-  #       # username: myapp.csplay9game.com
-  #       # password: 0y40%tLa
-  #       # key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC1TwmeUYiXOnCCOOYmMgj16YxljAqD51AXigwM8yYF0ULWgZutnXtmjHNPQeJohvTKNP+P8mjeEYfdXiDZPZ6EU76shIbgzFRsMbbRCqVSdfJffQfFnIchgyDrImbmhgH8rWxRo8NDSfXLn2kz0Rcv3qocfbEtBsX5kyMIEEXV2cRRKtdb5whZ1rdyiKL3/dAQ7FJNwStvByn4qf8irZrQ39SzXVwxwW8ZG6PKIOWb4CLREVDlPA9fUkDNzLDxtvG+7rCQG3SSwElcn63ya4MQ9uO/yPrT0rcIO5IW8DRVCteYmj57ar58kHjLec15KSHeFcmsPK7eXGm9syM97UoQ+KAkz0JiSHV0CPMBfcvPzneiWUhVP5FNGAN/NdereAUOdeyBR47/baBwocYhHyyqU+cAtWhpoDT91t8JseOvtkftlyshU6SyoFbg+zOZYC0jX1CHcY6VxDw7Hs8zzq83xENtO45fi+Sl84p+KzYzOa+XZulH3UjswB72ij6YtG0= isara@Isaras-MacBook-Air.local
-  #       # passphrase: 
-  #       script: |
-  #         cd ~/httpdocs
-  #         git pull
-  #         npm install --production
-  #         pm2 restart your-app-name
-  run_pull:
-    name: run pull
     runs-on: ubuntu-latest
-    
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    # - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
     steps:
     - name: install ssh keys
       # check this thread to understand why its needed:
@@ -65,7 +41,34 @@ jobs:
         install -m 600 -D /dev/null ~/.ssh/id_rsa
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
-    - name: connect and pull
-      run: ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SSH_HOST }} "cd /httpdocs/xxx/my-app && git checkout main && git pull && exit"
-    - name: cleanup
-      run: rm -rf ~/.ssh
+    - name: Deploy to server via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        # endpoint: ${{ secrets.SERVER_ENDPOINT }}
+        # host: ${{ secrets.SERVER_HOST }}
+        # username: ${{ secrets.SERVER_USERNAME }}
+        # password: ${{ secrets.SERVER_PASSWORD }}
+        # key: ${{ secrets.SERVER_PRIVATE_KEY }}
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        script: |
+          # cd /httpdocs/test_build
+          git pull
+          npm install --production
+          pm2 restart your-app-name
+  # run_pull:
+  #   name: run pull
+  #   runs-on: ubuntu-latest
+    
+  #   steps:
+  #   - name: install ssh keys
+  #     # check this thread to understand why its needed:
+  #     # https://stackoverflow.com/a/70447517
+  #     run: |
+  #       install -m 600 -D /dev/null ~/.ssh/id_rsa
+  #       echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+  #       ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+  #   - name: connect and pull
+  #     run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /httpdocs/xxx/my-app && git checkout main && git pull && exit"
+  #   - name: cleanup
+  #     run: rm -rf ~/.ssh
