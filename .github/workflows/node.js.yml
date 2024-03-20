@@ -10,25 +10,23 @@ on:
     branches: [ "main" ]
 
 jobs:
-  # build:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-  #   runs-on: ubuntu-latest
-
-  #   strategy:
-  #     matrix:
-  #       node-version: [14.x]
-  #       # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: Use Node.js ${{ matrix.node-version }}
-  #     uses: actions/setup-node@v3
-  #     with:
-  #       node-version: ${{ matrix.node-version }}
-  #       cache: 'npm'
-  #   # - run: npm ci
-  #   - run: npm run build --if-present
-  #   - run: npm test
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    # - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
 
   # deploy:
   #   needs: build
@@ -55,8 +53,23 @@ jobs:
   #         git pull
   #         npm install --production
   #         pm2 restart your-app-name
-  run_pull:
-    name: run pull
+  # run_pull:
+  #   name: run pull
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: install ssh keys
+  #     # check this thread to understand why its needed:
+  #     # https://stackoverflow.com/a/70447517
+  #     run: |
+  #       install -m 600 -D /dev/null ~/.ssh/id_rsa
+  #       echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+  #       ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+  #   - name: connect and pull
+  #     run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /httpdocs/xxx/my-app && git checkout main && git pull && exit"
+  #   - name: cleanup
+  #     run: rm -rf ~/.ssh
+  deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
     - name: install ssh keys
@@ -67,7 +80,7 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
     - name: connect and pull
-      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /httpdocs/test_build && git checkout main && git pull && exit"
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p /httpdocs/test_build && git checkout main && git pull && exit"
     - name: cleanup
       run: rm -rf ~/.ssh
  
