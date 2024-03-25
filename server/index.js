@@ -14,7 +14,8 @@ const path = require("path");
 const fs = require("fs"); 
 const { getPostById } = require("./stub/posts");
 
-const PORT = process.env.REACT_APP_PORT || "https://myapp.csplay9game.com";
+// const server = require('https').createServer();
+const PORT = process.env.REACT_APP_PORT || 3000;
 const indexPath  = path.resolve(__dirname, '..', 'build', 'index.html');
 
 // static resources should just be served as they are
