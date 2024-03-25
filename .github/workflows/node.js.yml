@@ -97,7 +97,7 @@ jobs:
     - name: connect and pull
       run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/vhosts/myapp.csplay9game.com/my-app && git checkout main -- package-lock.json && git pull && exit"
     - name: build
-      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/vhosts/myapp.csplay9game.com/my-app && npm install && npm run server && exit"
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/vhosts/myapp.csplay9game.com/my-app && npm install && npm run build && exit"
     - name: copy file build to httpdocs
       run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cp -r /var/www/vhosts/myapp.csplay9game.com/my-app/build/* /var/www/vhosts/myapp.csplay9game.com/httpdocs && exit"
     - name: cleanup
