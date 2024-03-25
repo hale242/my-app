@@ -12,9 +12,9 @@ function App() {
 
   return (
     <>
-      <Helmet>
+      {/* <Helmet>
         <title>{pageTitle}</title>
-      </Helmet>
+      </Helmet> */}
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
