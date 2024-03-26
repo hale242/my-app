@@ -14,17 +14,17 @@ const path = require("path");
 const fs = require("fs"); 
 const { getPostById } = require("./stub/posts");
 
-// const server = require('https').createServer();
+const server = require('https').createServer();
 const PORT = process.env.REACT_APP_PORT || "47.236.103.181";
 const indexPath  = path.resolve(__dirname, '..', 'build', 'index.html');
 
 // static resources should just be served as they are
-app.use(
+server.use(
   express.static(path.resolve(__dirname, "..", "build"), { maxAge: "30d" })
 );
 
 // app.get("/*", (req, res, next) => {
-app.get('/post', (req, res) => {
+server.get('/post', (req, res) => {
 
     // res.send('Hello from /post route!');
   fs.readFile(indexPath, 'utf8', (err, htmlData) => {
@@ -49,7 +49,7 @@ app.get('/post', (req, res) => {
   });
 });
 
-app.listen(PORT, (error) => {
+server.listen(PORT, (error) => {
   if (error) {
     return console.log("Error during app startup", error);
   }
