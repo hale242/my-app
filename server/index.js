@@ -12,7 +12,7 @@ const express = require("express");
 const http = require('http');
 
 const app = express();
-const server = http.createServer(app);
+const server = http.createServer("47.236.103.181");
 
 // const path = require("path");
 // const fs = require("fs"); 
