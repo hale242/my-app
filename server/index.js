@@ -9,18 +9,17 @@
 // });
 
 const express = require("express");
-const http = require('http');
+const http = require("http");
 
 const app = express();
 const server = http.createServer(app);
 
 // const path = require("path");
-// const fs = require("fs"); 
+// const fs = require("fs");
 // const { getPostById } = require("./stub/posts");
 
 // const PORT = process.env.REACT_APP_PORT || "3000";
 // const indexPath  = path.resolve(__dirname, '..', 'build', 'index.html');
-
 
 // app.use(
 //   express.static(path.resolve(__dirname, "..", "build"), { maxAge: "30d" })
@@ -58,26 +57,29 @@ const server = http.createServer(app);
 //   console.log("listening on " + PORT + "...");
 // });
 
-
 const PORT = 3001; // Your desired port number
 const RETRY_DELAY = 1000; // Delay in milliseconds before retrying
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
+app.get("/", (req, res) => {
+  res.send("Hello, World!");
 });
 
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-server.on('error', (error) => {
-  if (error.code === 'EADDRINUSE') {
-    console.log(`Port ${PORT} is already in use. Retrying in ${RETRY_DELAY / 1000} seconds...`);
+server.on("error", (error) => {
+  if (error.code === "EADDRINUSE") {
+    console.log(
+      `Port ${PORT} is already in use. Retrying in ${
+        RETRY_DELAY / 1000
+      } seconds...`
+    );
     setTimeout(() => {
       server.close();
       server.listen(PORT);
     }, RETRY_DELAY);
   } else {
-    console.error('An error occurred:', error);
+    console.error("An error occurred:", error);
   }
 });
