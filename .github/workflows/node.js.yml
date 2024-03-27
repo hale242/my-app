@@ -94,17 +94,17 @@ jobs:
         install -m 600 -D /dev/null ~/.ssh/id_rsa
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
-    # - name: connect and pull
-    #   run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/vhosts/myapp.csplay9game.com/my-app && git checkout main -- package-lock.json && git pull && exit"
-    # - name: build
-    #   run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/vhosts/myapp.csplay9game.com/my-app && npm install && npm run build && exit"
-    # - name: copy file build to httpdocs
-    #   run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cp -r /var/www/vhosts/myapp.csplay9game.com/my-app/build/* /var/www/vhosts/myapp.csplay9game.com/httpdocs && exit"
-    
     - name: connect and pull
-      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/vhosts/myapp.csplay9game.com/httpdocs/my-app && git checkout main -- package-lock.json && git pull && exit"
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/vhosts/myapp.csplay9game.com/my-app && git checkout main -- package-lock.json && git pull && exit"
     - name: build
-      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/vhosts/myapp.csplay9game.com/httpdocs/my-app && npm install && exit"
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/vhosts/myapp.csplay9game.com/my-app && npm install && npm run build && exit"
+    - name: copy file build to httpdocs
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cp -r /var/www/vhosts/myapp.csplay9game.com/my-app/build/* /var/www/vhosts/myapp.csplay9game.com/httpdocs && exit"
+    
+    # - name: connect and pull
+    #   run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/vhosts/myapp.csplay9game.com/httpdocs/my-app && git checkout main -- package-lock.json && git pull && exit"
+    # - name: build
+    #   run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/vhosts/myapp.csplay9game.com/httpdocs/my-app && npm install && exit"
     - name: cleanup
       run: rm -rf ~/.ssh
  
